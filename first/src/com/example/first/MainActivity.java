@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 		//webView.loadUrl("http://www.baidu.com");
 		//webView.loadUrl("file:///android_asset/index.html");
 //		webView.loadUrl("http://10.0.2.2:7788/");
-		webView.loadUrl("http://192.168.137.1:7788/");
+		webView.loadUrl("www.env.com:9001/");
 	}
 	
 	//web ”ÕºøÕªß∂À
