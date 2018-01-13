@@ -4,7 +4,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -61,11 +63,22 @@ public class MainActivity extends Activity {
 		mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		
 		//设置位置信息存放路径
-		mWebSettings.setGeolocationDatabasePath(this.getApplicationContext().getFilesDir().getPath() );
+		//mWebSettings.setGeolocationDatabasePath(this.getApplicationContext().getFilesDir().getPath() );
+		
+		//启用数据库  
+		mWebSettings.setDatabaseEnabled(true);  
+		String dir = this.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();  
+		// 启用地理定位  
+		mWebSettings.setGeolocationEnabled(true);  
+		// 设置定位的数据库路径  
+		mWebSettings.setGeolocationDatabasePath(dir);  
+		// 最重要的方法，一定要设置，这就是出不来的主要原因 原因请看参考链接（Android WebView 无法打开天猫页面）
+		mWebSettings.setDomStorageEnabled(true);  
+		
 		
 		//加载URL内容
 		//webView.loadUrl("http://www.baidu.com");
-		//webView.loadUrl("file:///android_asset/index.html");
+//		webView.loadUrl("file:///android_asset/index.html");
 //		webView.loadUrl("http://10.0.2.2:7788/");
 		webView.loadUrl("www.env.com:9001/");
 	}
@@ -152,13 +165,18 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		
+		//用于获取位置信息---begin
 		@Override
 		public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-			Log.e(TAG,"开始调用");
-		    callback.invoke(origin, true, true);
+		    callback.invoke(origin, true, false);
 		    super.onGeolocationPermissionsShowPrompt(origin, callback);
 		}
 		
+		@Override
+		public void onReceivedIcon(WebView view, Bitmap icon) {
+			super.onReceivedIcon(view, icon);
+		}
+		//用于获取位置信息---end
 	}
 	
 	
