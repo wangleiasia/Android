@@ -1,0 +1,9 @@
+first/bin
+first/.metadata
+wc-wk/.metadata
+wc-wk/first/.metadata
+wc-wk/first/bin
+wc-wk/first/.settings
+*.classpath
+*.project
+
