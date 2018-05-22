@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+
+<title>home</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation
+						.getCurrentPosition(
+								function(position) {
+									var coords = position.coords;
+									// 维度
+									var v = coords.latitude;
+									// 精度
+									var s = coords.longitude
+									alert(changeToDFM(v) + '---' + changeToDFM(s));
+								},
+								function(error) {
+									alert(error.code);
+								}, {
+									// 指示浏览器获取高精度的位置，默认为false
+									enableHighAcuracy : false,
+									// 指定获取地理位置的超时时间，默认不限时，单位为毫秒
+									timeout : 5000,
+									// 最长有效期，在重复获取地理位置时，此参数指定多久再次获取位置。
+									maximumAge : 3000
+								});
+			} else {
+				alert("Your browser does not support Geolocation!");
+			}
+
+		}
+		
+		function changeToDFM(du){
+	        var duL = parseInt(du/1);
+	        var fen,miao;
+
+	        var temp = du % 1;
+	        temp = temp *60;
+	        fen = parseInt(temp/1);
+	        temp = (temp % 1) * 60;
+	        miao = parseInt(temp/1);
+
+	        return duL+"°"+fen+"'"+miao+"\"";
+	    }
+	</script>
+
+	<input type="button" value="位置信息" onclick="getLocation()">
+
+</body>
+</html>
