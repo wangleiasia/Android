@@ -1,5 +1,6 @@
-package com.example.wanglei.envapp;
+package com.example.wanglei.evnapp;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,8 +10,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         //设置位置信息存放路径
-        //mWebSettings.setGeolocationDatabasePath(this.getApplicationContext().getFilesDir().getPath() );
+        mWebSettings.setGeolocationDatabasePath(this.getApplicationContext().getFilesDir().getPath() );
 
         //启用数据库
         mWebSettings.setDatabaseEnabled(true);
@@ -186,8 +189,15 @@ public class MainActivity extends AppCompatActivity {
         //用于获取位置信息---begin
         @Override
         public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+            //Log.e("", "获取地理权限");
+            System.out.println("获取地理权限");
             callback.invoke(origin, true, false);
             super.onGeolocationPermissionsShowPrompt(origin, callback);
+
+//            ActivityCompat.requestPermissions(getActivity(), new String[]{
+//                    Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION
+//            }, 100);
         }
 
         @Override
